@@ -1,38 +1,48 @@
 // Juego de adivinar el número
 
+const MIN = 1;
+const MAX = 100;
+
 let numeroSecreto = generarNumero();
 let intentos = 0;
 
 const inputGuess = document.getElementById("guess");
 const btnGuess = document.getElementById("btnGuess");
+const valorLeido = document.getElementById("valorLeido");
 const mensaje = document.getElementById("mensaje");
-const intentosDiv = document.getElementById("intentos");
+const intentosParrafo = document.getElementById("intentos");
 const btnReiniciar = document.getElementById("btnReiniciar");
 
 function generarNumero() {
-  return Math.floor(Math.random() * 100) + 1; // entre 1 y 100
+  return Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
 }
 
 function comprobarGuess() {
-  const valor = Number(inputGuess.value);
+  // 1) lee el valor y lo convierte con Number()
+  const valorTexto = inputGuess.value;
+  const valor = Number(valorTexto);
 
-  if (!inputGuess.value || valor < 1 || valor > 100) {
-    mensaje.textContent = "Introduce un número entre 1 y 100";
+  // valor vacío o fuera de 1-100 -> aviso sin gastar intento
+  if (!valorTexto || valor < MIN || valor > MAX) {
+    valorLeido.textContent = "";
+    mensaje.textContent = `Introduce un número entre ${MIN} y ${MAX}`;
     return;
   }
 
-  intentos++;
+  // muestra lo que se ha leído
+  valorLeido.textContent = `Has dicho: ${valor}`;
 
+  intentos++;
+  intentosParrafo.textContent = `Intentos: ${intentos}`;
+
+  // 2) el oráculo responde: mayor / menor / correcto
   if (valor === numeroSecreto) {
     mensaje.textContent = `¡Correcto! Era el ${numeroSecreto} 🎉`;
-    intentosDiv.textContent = `Lo has adivinado en ${intentos} intento(s)`;
     terminarJuego();
   } else if (valor < numeroSecreto) {
     mensaje.textContent = "Más alto ⬆️";
-    intentosDiv.textContent = `Intentos: ${intentos}`;
   } else {
     mensaje.textContent = "Más bajo ⬇️";
-    intentosDiv.textContent = `Intentos: ${intentos}`;
   }
 
   inputGuess.value = "";
@@ -48,8 +58,9 @@ function terminarJuego() {
 function reiniciarJuego() {
   numeroSecreto = generarNumero();
   intentos = 0;
+  valorLeido.textContent = "";
   mensaje.textContent = "";
-  intentosDiv.textContent = "";
+  intentosParrafo.textContent = "";
   inputGuess.disabled = false;
   btnGuess.disabled = false;
   inputGuess.value = "";
@@ -60,7 +71,6 @@ function reiniciarJuego() {
 btnGuess.addEventListener("click", comprobarGuess);
 btnReiniciar.addEventListener("click", reiniciarJuego);
 
-// Permitir pulsar Enter en vez de hacer click
 inputGuess.addEventListener("keydown", (e) => {
   if (e.key === "Enter") comprobarGuess();
 });
