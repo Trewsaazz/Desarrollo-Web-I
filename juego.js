@@ -1,5 +1,3 @@
-// Juego de adivinar el número
-
 const MIN = 1;
 const MAX = 100;
 
@@ -18,7 +16,7 @@ function generarNumero() {
 }
 
 function comprobarGuess() {
-  // 1) lee el valor y lo convierte con Number()
+
   const valorTexto = inputGuess.value;
   const valor = Number(valorTexto);
 
@@ -29,15 +27,14 @@ function comprobarGuess() {
     return;
   }
 
-  // muestra lo que se ha leído
+
   valorLeido.textContent = `Has dicho: ${valor}`;
 
   intentos++;
   intentosParrafo.textContent = `Intentos: ${intentos}`;
 
-  // 2) el oráculo responde: mayor / menor / correcto
   if (valor === numeroSecreto) {
-    mensaje.textContent = `¡Correcto! Era el ${numeroSecreto} 🎉`;
+    mensaje.textContent = `¡Correcto! Era el ${numeroSecreto}. Lo has adivinado en ${intentos} intento(s) 🎉`;
     terminarJuego();
   } else if (valor < numeroSecreto) {
     mensaje.textContent = "Más alto ⬆️";
