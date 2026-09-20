@@ -1,6 +1,5 @@
 "use strict";
 
-/* Ahorcado simple: sin IA, sin librerías. */
 const PALABRAS = [
   "JAVASCRIPT", "NAVEGADOR", "SERVIDOR", "FUNCION", "VARIABLE",
   "ARCHIVO", "TECLADO", "ORDENADOR", "INTERNET", "PANTALLA",
