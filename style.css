@@ -1,0 +1,123 @@
+:root {
+  --bg: #f4f5fb;
+  --panel: #ffffff;
+  --texto: #1c1e26;
+  --texto-suave: #6b7280;
+  --acento: #5865f2;
+  --acento-hover: #4752c4;
+  --borde: #d8dae6;
+  --verde: #2ecc71;
+  --rojo: #e74c3c;
+}
+
+/* Bonus oculto: escribe "dd" para alternar este tema oscuro */
+.modo-oscuro {
+  --bg: #14151f;
+  --panel: #1e2030;
+  --texto: #e8e9f0;
+  --texto-suave: #9294a6;
+  --borde: #33354a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--texto);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 16px 60px;
+  transition: background .3s ease, color .3s ease;
+}
+
+#app { max-width: 460px; width: 100%; text-align: center; }
+
+#dibujo {
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  display: inline-block;
+  padding: 10px 18px;
+  font-size: 15px;
+  line-height: 1.2;
+  margin: 10px 0;
+}
+
+#palabra {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 6px;
+  margin: 10px 0;
+}
+
+#mensaje { min-height: 24px; font-size: 16px; margin: 4px 0 12px; }
+
+#teclado {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.tecla {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  border: 1px solid var(--borde);
+  background: var(--panel);
+  color: var(--texto);
+  font-weight: 600;
+  cursor: pointer;
+}
+.tecla:hover:not(:disabled) { background: var(--borde); }
+.tecla:disabled { cursor: default; opacity: .55; }
+.tecla.acertada { background: var(--verde); color: white; border-color: var(--verde); }
+.tecla.fallida { background: var(--rojo); color: white; border-color: var(--rojo); }
+
+#marcador { color: var(--texto-suave); font-size: 14px; margin-bottom: 12px; }
+
+button#btnJugarOtra {
+  padding: 8px 16px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: none;
+  background: var(--acento);
+  color: white;
+  cursor: pointer;
+}
+button#btnJugarOtra:hover { background: var(--acento-hover); }
+
+/* ---------- Easter egg: escribe "caos" ---------- */
+@keyframes fondoCaotico {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+@keyframes giroCaotico {
+  0%, 100% { transform: rotate(var(--giro, 0deg)) scale(1); }
+  50% { transform: rotate(calc(var(--giro, 0deg) * -1)) scale(1.2); }
+}
+@keyframes colorCaotico {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+@keyframes temblorCaotico {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-3px, 3px); }
+  50% { transform: translate(3px, -3px); }
+  75% { transform: translate(-3px, -3px); }
+}
+
+body.modo-caos {
+  background: linear-gradient(90deg, #ff004c, #ff9900, #fff700, #22ff22, #00d4ff, #7a00ff, #ff004c);
+  background-size: 400% 400%;
+  animation: fondoCaotico 4s linear infinite;
+}
+.modo-caos h1#titulo { animation: giroCaotico 1.2s ease-in-out infinite; }
+.modo-caos #dibujo { animation: temblorCaotico .25s linear infinite, colorCaotico 3s linear infinite; }
+.modo-caos #palabra { animation: colorCaotico 1.5s linear infinite; }
+.modo-caos .tecla { animation: giroCaotico .6s ease-in-out infinite, colorCaotico 2s linear infinite; }
